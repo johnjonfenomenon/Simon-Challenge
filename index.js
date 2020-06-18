@@ -2,9 +2,11 @@ var computerSequence =[];
 var playerSequence =[];
 var level = 1;
 var lost = false;
+var playersTurn = false;
 
 
 function nextSequence(){
+ 
     var num = Math.floor(Math.random() * 4);
     var color ="";
     switch (num){
@@ -24,6 +26,7 @@ function nextSequence(){
     computerSequence.push(color);
 
     setTimeout(function(){playSequence(computerSequence);}, 1000);
+    //playersTurn = true;
     
 }
 
@@ -62,12 +65,21 @@ function playAgain(){
 }
 
 function playSequence(){
+    
+    //toggleTurn();
     var delay = 0;
+    var switchPlay = 0;
+
+    playersTurn = false;
+    
 
     for(var i = 0; i<computerSequence.length; i++){
-            
+
+      
             var b = computerSequence[i];
             delay = delay + 1000;
+
+            switchPlay++;
 
             switch(b){
                 case "green":
@@ -94,9 +106,11 @@ function playSequence(){
                     setTimeout(function(){ $("#blue").removeClass("pressed");}, delay+300);
                     break;
             }
-            
+    }
 
-
+    debugger;
+    if (switchPlay === computerSequence.length){
+        setTimeout(function(){toggleTurn();},delay+500);
     }
 }
 
@@ -128,8 +142,6 @@ function playSingleSound(b){
                     setTimeout(function(){ $("#blue").removeClass("pressed");}, 700);
                     break;
             }
-            
-
 
     }
 
@@ -152,27 +164,35 @@ function playSingleSound(b){
         }
     }
 
+    function toggleTurn(){
+        if (playersTurn === true){
+            playersTurn = false;
+        }else{
+            playersTurn = true;
+        }
+
+    }
+
 
 $(".btn").click(function(){
 /*listens for mouse clicks and pushes the suquence to the array*/
    //debugger;
 
+   if(lost===false && playersTurn === true){
+        playerSequence.push($(this).attr("id"));
+        playSingleSound($(this).attr("id"));
 
-    playerSequence.push($(this).attr("id"));
-    playSingleSound($(this).attr("id"));
-
-    /*compare every click to computer sequence*/
-    iterateSeq(playerSequence.length);
-
-
+        /*compare every click to computer sequence*/
+        iterateSeq(playerSequence.length);
+   }
+   /*end the players turn when he selected the same number of colors as the computer*/
 });
 
-
-$(document).keypress(function(event){
+$(document).keyup(function(event){
     /*starts the game*/
-
-        $("h1").text("Level " + level.toString());
-        nextSequence();
+        if(lost===false && computerSequence.length===0){
+            $("h1").text("Level " + level.toString());
+            nextSequence();
+        }
 
 });
-
