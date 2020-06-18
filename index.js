@@ -230,7 +230,7 @@ $(document).keyup(function(event){
 /* start up for mobile*/
 
 
-function tStart(){
+function tStart(e){
     started = true;
         if(lost===false && computerSequence.length===0){
             $("h1").text("Player Get Ready!!");
