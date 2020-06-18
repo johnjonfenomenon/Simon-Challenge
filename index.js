@@ -217,18 +217,6 @@ $(".btn").click(function(){
    /*end the players turn when he selected the same number of colors as the computer*/
 });
 
-$(document).on("tap",function(event){
-    /*starts the game*/
-    started = true;
-        if(lost===false && computerSequence.length===0){
-            $("h1").text("Player Get Ready!!");
-            setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
-            setTimeout(function(){nextSequence();}, 2000);
-        }
-
-});
-
-
 $(document).keyup(function(event){
     /*starts the game*/
     started = true;
@@ -239,3 +227,13 @@ $(document).keyup(function(event){
         }
 
 });
+/* start up for mobile*/
+function touchStart(){
+    started = true;
+        if(lost===false && computerSequence.length===0){
+            $("h1").text("Player Get Ready!!");
+            setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
+            setTimeout(function(){nextSequence();}, 2000);
+        }
+
+}
