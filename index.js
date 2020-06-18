@@ -179,11 +179,6 @@ function playSingleSound(b){
 
 /** Code below starts things off.  it calls an intro section while waiting for user input  **/
 
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    $("h1").text("Click here to Start");
-    
-   }
-
     function intro(){
         
         setTimeout(function(){ $("#green").addClass("pressed");}, 100);
@@ -233,6 +228,11 @@ $(document).keyup(function(event){
 
 });
 /* start up for mobile*/
+
+$(".mobtab").on("tap",function(){
+    touchStart();
+  });
+
 function touchStart(){
     started = true;
         if(lost===false && computerSequence.length===0){
