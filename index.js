@@ -229,7 +229,7 @@ $(document).keyup(function(event){
 });
 /* start up for mobile*/
 
-$(".mobtab").on("tap",function(){
+$(".mobtab").on("tap",function(event){
     touchStart();
   });
 
