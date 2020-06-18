@@ -238,4 +238,4 @@ $(".mobtab").on("tap",function(){
             setTimeout(function(){nextSequence();}, 2000);
         }
 
-}
+});
