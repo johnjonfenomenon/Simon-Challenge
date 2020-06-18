@@ -3,6 +3,8 @@ var playerSequence =[];
 var level = 1;
 var lost = false;
 var playersTurn = false;
+var started = false
+
 
 
 function nextSequence(){
@@ -37,6 +39,7 @@ function createSound(sound){
 }
 
 
+
 function checkMatch(a,b){
 
     if (a.toString() === b.toString()){
@@ -50,7 +53,8 @@ function checkMatch(a,b){
         $("h1").text("You Lose");
         $("body").css("background-color","#7b1d1d");
         createSound('sounds/wrong.mp3');
-        setTimeout(function(){playAgain();}, 500);
+        setTimeout(function(){$(".btn").addClass("pressed");}, 1000); 
+        setTimeout(function(){playAgain();}, 2000);
         
     }
 
@@ -108,14 +112,14 @@ function playSequence(){
             }
     }
 
-    debugger;
+    //debugger;
     if (switchPlay === computerSequence.length){
         setTimeout(function(){toggleTurn();},delay+500);
     }
 }
 
+
 function playSingleSound(b){
-    
 
             switch(b){
                 case "green":
@@ -173,6 +177,31 @@ function playSingleSound(b){
 
     }
 
+/** Code below starts things off.  it calls an intro section while waiting for user input  **/
+
+    function intro(){
+        
+        setTimeout(function(){ $("#green").addClass("pressed");}, 100);
+        setTimeout(function(){ $("#green").removeClass("pressed");}, 200);
+    
+        setTimeout(function(){ $("#red").addClass("pressed");}, 300);
+        setTimeout(function(){ $("#red").removeClass("pressed");}, 400); 
+
+        setTimeout(function(){ $("#blue").addClass("pressed");}, 500);
+        setTimeout(function(){ $("#blue").removeClass("pressed");}, 600);
+    
+        setTimeout(function(){ $("#yellow").addClass("pressed");}, 700);
+        setTimeout(function(){ $("#yellow").removeClass("pressed");}, 800);
+}
+
+
+(function myLoop(i) {
+    if(started === false){
+        setTimeout(function() {
+        intro(); //  your code here                
+        if (--i) myLoop(i);   //  decrement i and call myLoop again if i > 0
+        }, 1000)}
+  })(999);  
 
 $(".btn").click(function(){
 /*listens for mouse clicks and pushes the suquence to the array*/
@@ -190,9 +219,11 @@ $(".btn").click(function(){
 
 $(document).keyup(function(event){
     /*starts the game*/
+    started = true;
         if(lost===false && computerSequence.length===0){
-            $("h1").text("Level " + level.toString());
-            nextSequence();
+            $("h1").text("Player Get Ready!!");
+            setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
+            setTimeout(function(){nextSequence();}, 2000);
         }
 
 });
