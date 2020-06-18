@@ -229,11 +229,8 @@ $(document).keyup(function(event){
 });
 /* start up for mobile*/
 
-$(".mobtab").on("tap",function(event){
-    touchStart();
-  });
 
-function touchStart(){
+function tStart(){
     started = true;
         if(lost===false && computerSequence.length===0){
             $("h1").text("Player Get Ready!!");
