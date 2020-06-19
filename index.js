@@ -58,6 +58,39 @@ function playAgain(){
        }
 }
 
+
+function animateButton(color,delay1,delay2){
+
+    switch(color){
+        case "green":
+            setTimeout(function(){createSound('sounds/green.mp3');}, delay1);
+            setTimeout(function(){ $("#green").addClass("pressed");}, delay1);
+            setTimeout(function(){ $("#green").removeClass("pressed");}, delay2);
+            break;
+            
+        case "red":
+            setTimeout(function(){createSound('sounds/red.mp3');}, delay1); 
+            setTimeout(function(){ $("#red").addClass("pressed");}, delay1);
+            setTimeout(function(){ $("#red").removeClass("pressed");}, delay2); 
+            break;
+        
+        case "yellow":
+            setTimeout(function(){createSound('sounds/yellow.mp3');}, delay1);                                       
+            setTimeout(function(){ $("#yellow").addClass("pressed");}, delay1);
+            setTimeout(function(){ $("#yellow").removeClass("pressed");}, delay2);
+            break;
+
+        case "blue":
+            setTimeout(function(){createSound('sounds/blue.mp3');}, delay1);                                                          
+            setTimeout(function(){ $("#blue").addClass("pressed");}, delay1);
+            setTimeout(function(){ $("#blue").removeClass("pressed");}, delay2);
+            break;
+    }
+
+}
+
+
+
 function playSequence(){
     
     var delay = 0;
@@ -73,31 +106,8 @@ function playSequence(){
 
             switchPlay++;
 
-            switch(b){
-                case "green":
-                    setTimeout(function(){createSound('sounds/green.mp3');}, delay);
-                    setTimeout(function(){ $("#green").addClass("pressed");}, delay);
-                    setTimeout(function(){ $("#green").removeClass("pressed");}, delay+300);
-                    break;
-                    
-                case "red":
-                    setTimeout(function(){createSound('sounds/red.mp3');}, delay); 
-                    setTimeout(function(){ $("#red").addClass("pressed");}, delay);
-                    setTimeout(function(){ $("#red").removeClass("pressed");}, delay+300); 
-                    break;
-                
-                case "yellow":
-                    setTimeout(function(){createSound('sounds/yellow.mp3');}, delay);                                       
-                    setTimeout(function(){ $("#yellow").addClass("pressed");}, delay);
-                    setTimeout(function(){ $("#yellow").removeClass("pressed");}, delay+300);
-                    break;
+            animateButton(b,delay,delay+300);
 
-                case "blue":
-                    setTimeout(function(){createSound('sounds/blue.mp3');}, delay);                                                          
-                    setTimeout(function(){ $("#blue").addClass("pressed");}, delay);
-                    setTimeout(function(){ $("#blue").removeClass("pressed");}, delay+300);
-                    break;
-            }
     }
 
     if (switchPlay === computerSequence.length){
@@ -117,35 +127,12 @@ function toggleTurn(){
 
 function playSingleSound(b){
 
-            switch(b){
-                case "green":
-                    createSound('sounds/green.mp3');
-                    setTimeout(function(){ $("#green").addClass("pressed");}, 200);
-                    setTimeout(function(){ $("#green").removeClass("pressed");}, 400);
-                    break;
-                    
-                case "red":
-                    createSound('sounds/red.mp3');
-                    setTimeout(function(){ $("#red").addClass("pressed");}, 200);
-                    setTimeout(function(){ $("#red").removeClass("pressed");}, 400); 
-                    break;
-                
-                case "yellow":
-                    createSound('sounds/yellow.mp3');
-                    setTimeout(function(){ $("#yellow").addClass("pressed");}, 200);
-                    setTimeout(function(){ $("#yellow").removeClass("pressed");}, 400);
-                    break;
-
-                case "blue":
-                    createSound('sounds/blue.mp3');
-                    setTimeout(function(){ $("#blue").addClass("pressed");}, 500);
-                    setTimeout(function(){ $("#blue").removeClass("pressed");}, 700);
-                    break;
-            }
+    var delay = 200;
+    animateButton(b,delay,delay+200);
 
     }
 
-    function iterateSeq(k){
+function iterateSeq(k){
         //debugger;
         
         for(var p = 0; p<k; p++){
@@ -162,7 +149,7 @@ function playSingleSound(b){
         if((playerSequence.length === computerSequence.length) && (lost === false)){
             checkMatch(playerSequence,computerSequence);
         }
-    }
+}
 
 $(".btn").click(function(){
 /*listens for mouse clicks and pushes the suquence to the array*/
