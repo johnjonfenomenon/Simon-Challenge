@@ -90,5 +90,6 @@ body {
    }
    .mobtab{
     display: block;
+    border: palegreen;
    }
 }
