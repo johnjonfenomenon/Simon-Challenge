@@ -5,8 +5,6 @@ var lost = false;
 var playersTurn = false;
 var started = false
 
-
-
 function nextSequence(){
  
     var num = Math.floor(Math.random() * 4);
@@ -26,9 +24,7 @@ function nextSequence(){
             break;
     }
     computerSequence.push(color);
-
     setTimeout(function(){playSequence(computerSequence);}, 1000);
-    //playersTurn = true;
     
 }
 
@@ -38,8 +34,6 @@ function createSound(sound){
 
 }
 
-
-
 function checkMatch(a,b){
 
     if (a.toString() === b.toString()){
@@ -47,18 +41,14 @@ function checkMatch(a,b){
         nextSequence();
         level = level+1;
         setTimeout(function(){ $("h1").text("Level " + level.toString());}, 500);
-        
     }else{
         lost = true;
         $("h1").text("You Lose");
         $("body").css("background-color","#7b1d1d");
         createSound('sounds/wrong.mp3');
         setTimeout(function(){$(".btn").addClass("pressed");}, 1000); 
-        setTimeout(function(){playAgain();}, 2000);
-        
+        setTimeout(function(){playAgain();}, 2000);        
     }
-
-    
 }
 
 function playAgain(){
@@ -70,7 +60,6 @@ function playAgain(){
 
 function playSequence(){
     
-    //toggleTurn();
     var delay = 0;
     var switchPlay = 0;
 
@@ -79,7 +68,6 @@ function playSequence(){
 
     for(var i = 0; i<computerSequence.length; i++){
 
-      
             var b = computerSequence[i];
             delay = delay + 1000;
 
@@ -112,10 +100,18 @@ function playSequence(){
             }
     }
 
-    //debugger;
     if (switchPlay === computerSequence.length){
         setTimeout(function(){toggleTurn();},delay+500);
     }
+}
+
+function toggleTurn(){
+    if (playersTurn === true){
+        playersTurn = false;
+    }else{
+        playersTurn = true;
+    }
+
 }
 
 
@@ -168,41 +164,6 @@ function playSingleSound(b){
         }
     }
 
-    function toggleTurn(){
-        if (playersTurn === true){
-            playersTurn = false;
-        }else{
-            playersTurn = true;
-        }
-
-    }
-
-/** Code below starts things off.  it calls an intro section while waiting for user input  **/
-
-    function intro(){
-        
-        setTimeout(function(){ $("#green").addClass("pressed");}, 100);
-        setTimeout(function(){ $("#green").removeClass("pressed");}, 200);
-    
-        setTimeout(function(){ $("#red").addClass("pressed");}, 300);
-        setTimeout(function(){ $("#red").removeClass("pressed");}, 400); 
-
-        setTimeout(function(){ $("#blue").addClass("pressed");}, 500);
-        setTimeout(function(){ $("#blue").removeClass("pressed");}, 600);
-    
-        setTimeout(function(){ $("#yellow").addClass("pressed");}, 700);
-        setTimeout(function(){ $("#yellow").removeClass("pressed");}, 800);
-}
-
-
-(function myLoop(i) {
-    if(started === false){
-        setTimeout(function() {
-        intro(); //  your code here                
-        if (--i) myLoop(i);   //  decrement i and call myLoop again if i > 0
-        }, 1000)}
-  })(999);  
-
 $(".btn").click(function(){
 /*listens for mouse clicks and pushes the suquence to the array*/
    //debugger;
@@ -217,31 +178,54 @@ $(".btn").click(function(){
    /*end the players turn when he selected the same number of colors as the computer*/
 });
 
-$(document).keyup(function(event){
-    /*starts the game*/
-    if(event.which === 32){
-        started = true;
-            if(lost===false && computerSequence.length===0){
-                $("h1").text("Player Get Ready!!");
-                setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
-                setTimeout(function(){nextSequence();}, 2000);
-            }
-    }
 
-});
-/* start up for mobile*/
+/** Code below starts things off.  it calls an intro section while waiting for user input  **/
 
-$(function(){
-    $("#level-title.mobtab").bind("click",tapHandler);
-    function tapHandler(){
-        started = true;
-        if(lost===false && computerSequence.length===0){
+(function myLoop(i) {
+    if(started === false){
+        setTimeout(function() {
+        intro(); //  your code here                
+        if (--i) myLoop(i);   //  decrement i and call myLoop again if i > 0
+        }, 1000)}
+  })(999);  
+
+function intro(){
+        
+    setTimeout(function(){ $("#green").addClass("pressed");}, 100);
+    setTimeout(function(){ $("#green").removeClass("pressed");}, 200);
+
+    setTimeout(function(){ $("#red").addClass("pressed");}, 300);
+    setTimeout(function(){ $("#red").removeClass("pressed");}, 400); 
+
+    setTimeout(function(){ $("#blue").addClass("pressed");}, 500);
+    setTimeout(function(){ $("#blue").removeClass("pressed");}, 600);
+
+    setTimeout(function(){ $("#yellow").addClass("pressed");}, 700);
+    setTimeout(function(){ $("#yellow").removeClass("pressed");}, 800);
+}
+
+
+/*starting the game triggered by one of 2 listeners spacebar click for desktop and click for mobile*/
+function startTheGame(){
+    started = true;
+    if(lost===false && computerSequence.length===0){
             $("h1").text("Player Get Ready!!");
             setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
             setTimeout(function(){nextSequence();}, 2000);
     }
-    
+}
+
+/* listeners for starting the game*/
+
+   /*Listener for desktop*/
+$(document).keyup(function(event){
+    if(event.which === 32){ //if the space bar was hit
+        startTheGame();
     }
 });
 
-
+   /*Listener for mobile*/
+$("#level-title.mobtab").on("click",function(){
+        startTheGame();
+    }
+);
