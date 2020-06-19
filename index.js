@@ -229,13 +229,17 @@ $(document).keyup(function(event){
 });
 /* start up for mobile*/
 
-
-$(".level-title.mobtab").on("swipe",function(){
-    started = true;
+$(function(){
+    $("#level-title.mobtab").bind("click",tapHandler);
+    function tapHandler(event){
+        started = true;
         if(lost===false && computerSequence.length===0){
             $("h1").text("Player Get Ready!!");
             setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
             setTimeout(function(){nextSequence();}, 2000);
-        }
-
+    }
+    
+    }
 });
+
+
