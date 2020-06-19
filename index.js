@@ -219,19 +219,21 @@ $(".btn").click(function(){
 
 $(document).keyup(function(event){
     /*starts the game*/
-    started = true;
-        if(lost===false && computerSequence.length===0){
-            $("h1").text("Player Get Ready!!");
-            setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
-            setTimeout(function(){nextSequence();}, 2000);
-        }
+    if(event.which === 32){
+        started = true;
+            if(lost===false && computerSequence.length===0){
+                $("h1").text("Player Get Ready!!");
+                setTimeout(function(){$("h1").text("Level " + level.toString());}, 800);
+                setTimeout(function(){nextSequence();}, 2000);
+            }
+    }
 
 });
 /* start up for mobile*/
 
 $(function(){
     $("#level-title.mobtab").bind("click",tapHandler);
-    function tapHandler(event){
+    function tapHandler(){
         started = true;
         if(lost===false && computerSequence.length===0){
             $("h1").text("Player Get Ready!!");
